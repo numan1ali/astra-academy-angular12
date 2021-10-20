@@ -1,0 +1,7 @@
+/* You can add global styles to this file, and also import other style files */
+#credentialsCard .p-card .p-card-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}

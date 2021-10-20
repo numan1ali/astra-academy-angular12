@@ -1,0 +1,91 @@
+<div class="card">
+  <p-toolbar
+    styleClass="p-mb-4"
+    [style]="{
+      backgroundColor: '#e0dede',
+      padding: '0.5rem 1.2rem 0.5rem 1.2rem'
+    }"
+  >
+    <ng-template pTemplate="left">
+      <p><strong>Astra Academy</strong></p>
+    </ng-template>
+    <ng-template pTemplate="right">
+      <button
+        pButton
+        pRipple
+        type="button"
+        icon="pi pi-user"
+        label=""
+        iconPos="right"
+        [style]="{ marginRight: '10px' }"
+        (click)="studentDialog = true"
+        class="p-button-rounded p-button-outlined"
+      ></button>
+      <button
+        pButton
+        pRipple
+        type="button"
+        icon="pi pi-sign-out"
+        [label]="loggedInStudent?.name"
+        iconPos="right"
+        (click)="logout()"
+        class="p-button-rounded p-button-outlined"
+      ></button>
+    </ng-template>
+  </p-toolbar>
+  <app-student
+    [studentsData]="students"
+    [addStudent]="newItem"
+    (addStudentChange)="newItem = $event"
+  ></app-student>
+</div>
+
+<p-dialog
+  [(visible)]="studentDialog"
+  [style]="{ width: '450px' }"
+  header="Student Personal Details"
+  [modal]="true"
+  styleClass="p-fluid"
+>
+  <ng-template pTemplate="content">
+    <div class="grid">
+      <div class="col-6 dialogContentAlignment">
+        <strong>Name</strong>
+      </div>
+      <div class="col-6">
+        <p>{{ loggedInStudent.name }}</p>
+      </div>
+      <div class="col-6 dialogContentAlignment">
+        <strong>Roll Number</strong>
+      </div>
+      <div class="col-6">
+        <p>{{ loggedInStudent.rollNumber }}</p>
+      </div>
+      <div class="col-6 dialogContentAlignment">
+        <strong>Semester</strong>
+      </div>
+      <div class="col-6">
+        <p>{{ loggedInStudent.semester }}</p>
+      </div>
+
+      <div class="col-6 dialogContentAlignment">
+        <strong>Batch</strong>
+      </div>
+      <div class="col-6">
+        <p>{{ loggedInStudent.batch }}</p>
+      </div>
+      <div class="col-6 dialogContentAlignment">
+        <strong>GPA</strong>
+      </div>
+      <div class="col-6">
+        <p>{{ loggedInStudent.gpa }}</p>
+      </div>
+      <div class="col-6 dialogContentAlignment">
+        <strong>Assigned Teacher</strong>
+      </div>
+      <div class="col-6">
+        <p>{{ loggedInStudent.assignedTeacher }}</p>
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>

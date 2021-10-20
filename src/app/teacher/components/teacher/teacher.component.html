@@ -1,0 +1,30 @@
+<div class="card">
+  <p-toolbar
+    styleClass="p-mb-4"
+    [style]="{
+      backgroundColor: '#e0dede',
+      padding: '0.5rem 1.2rem 0.5rem 1.2rem'
+    }"
+  >
+    <ng-template pTemplate="left">
+      <p><strong>Astra Academy</strong></p>
+    </ng-template>
+    <ng-template pTemplate="right">
+      <button
+        pButton
+        pRipple
+        type="button"
+        icon="pi pi-sign-out"
+        [label]="loggedInTeacher?.name"
+        iconPos="right"
+        (click)="logout()"
+        class="p-button-rounded p-button-outlined"
+      ></button>
+    </ng-template>
+  </p-toolbar>
+  <app-student
+    [studentsData]="assignedStudents"
+    [addStudent]="newItem"
+    (addStudentChange)="newItem = $event"
+  ></app-student>
+</div>

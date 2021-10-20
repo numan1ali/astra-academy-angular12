@@ -1,0 +1,67 @@
+<div class="card">
+  <p-toolbar
+    styleClass="p-mb-4"
+    [style]="{
+      backgroundColor: '#e0dede'
+    }"
+  >
+    <ng-template pTemplate="left">
+      <p-selectButton
+        [options]="selectButtonOptions"
+        [(ngModel)]="selectedButton"
+        optionLabel="label"
+        optionValue="value"
+        [style]="{
+          marginRight: '10px'
+        }"
+      ></p-selectButton>
+      <span>
+        <button
+          pButton
+          pRipple
+          label=""
+          icon="pi pi-plus"
+          (click)="addNew()"
+          class="p-button-rounded p-button-outlined"
+        ></button
+      ></span>
+    </ng-template>
+    <ng-template pTemplate="right">
+      <button
+        pButton
+        pRipple
+        type="button"
+        icon="pi pi-sign-out"
+        label="Admin"
+        iconPos="right"
+        (click)="logout()"
+        class="p-button-rounded p-button-outlined"
+      ></button>
+    </ng-template>
+  </p-toolbar>
+  <app-student
+    *ngIf="selectedButton === 'student'"
+    [studentsData]="students"
+    [(addStudent)]="newItem"
+  ></app-student>
+  <app-teacher
+    *ngIf="selectedButton === 'teacher'"
+    [teachersData]="teachers"
+    [addTeacher]="newItem"
+    (addTeacherChange)="newItem = $event"
+  ></app-teacher>
+</div>
+<span *ngIf="createStudent">
+  <app-create-student
+    [(studentDialog)]="createStudent"
+    (studentDialogChange)="createStudent = $event; getStudents()"
+  ></app-create-student>
+</span>
+<p-toast></p-toast>
+
+<span *ngIf="createTeacher">
+  <app-create-teacher
+    [(teacherDialog)]="createTeacher"
+    (teacherDialogChange)="createTeacher = $event; getTeachers()"
+  ></app-create-teacher>
+</span>

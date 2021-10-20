@@ -1,0 +1,212 @@
+<p-toast></p-toast>
+
+<p-table
+  #dt
+  [value]="teachers"
+  [rows]="5"
+  [paginator]="true"
+  [globalFilterFields]="[
+    'name',
+    'country.name',
+    'representative.name',
+    'status'
+  ]"
+  responsiveLayout="scroll"
+  [responsive]="true"
+  [(selection)]="selectedTeachers"
+  [rowHover]="true"
+  [loading]="loading"
+  [filterDelay]="0"
+  dataKey="id"
+  [scrollHeight]="'calc(100vh - 280px)'"
+  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+  [showCurrentPageReport]="true"
+>
+  <ng-template pTemplate="caption">
+    <div class="flex align-items-center justify-content-between">
+      <h5 class="m-0">Manage Teachers</h5>
+      <span class="p-input-icon-left">
+        <i class="pi pi-search"></i>
+        <input
+          pInputText
+          type="text"
+          (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+          placeholder="Search..."
+        />
+      </span>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="header">
+    <tr>
+      <th style="width: 3rem">
+        <!-- <p-tableHeaderCheckbox></p-tableHeaderCheckbox> -->
+      </th>
+      <th pSortableColumn="name">
+        Name <p-sortIcon field="name"></p-sortIcon>
+      </th>
+      <th pSortableColumn="address">
+        Address <p-sortIcon field="address"></p-sortIcon>
+      </th>
+      <th pSortableColumn="majorSubject">
+        Major Subject <p-sortIcon field="majorSubject"></p-sortIcon>
+      </th>
+      <th pSortableColumn="contactNumber">
+        Contact Number <p-sortIcon field="contactNumber"></p-sortIcon>
+      </th>
+
+      <th pSortableColumn="age">Age <p-sortIcon field="age"></p-sortIcon></th>
+      <th pSortableColumn="available">
+        Available <p-sortIcon field="available"></p-sortIcon>
+      </th>
+      <th></th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-teacher>
+    <tr>
+      <td>
+        <!-- <p-tableCheckbox [value]="teacher"></p-tableCheckbox> -->
+      </td>
+      <td>{{ teacher.name }}</td>
+      <td>{{ teacher.address }}</td>
+      <td>{{ teacher.majorSubject }}</td>
+      <td>{{ teacher.contactNumber }}</td>
+      <td>{{ teacher.age }}</td>
+      <td>{{ teacher.available }}</td>
+      <td>
+        <button
+          pButton
+          pRipple
+          icon="pi pi-pencil"
+          class="p-button-rounded p-button-success p-mr-2"
+          [style]="{
+            marginRight: '10px'
+          }"
+          (click)="editTeacher(teacher)"
+        ></button>
+        <button
+          pButton
+          pRipple
+          icon="pi pi-trash"
+          class="p-button-rounded p-button-warning"
+          (click)="deleteTeacher(teacher)"
+        ></button>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="summary">
+    <div class="p-d-flex p-ai-center p-jc-between">
+      In total there are {{ teachers ? teachers.length : 0 }} teachers.
+    </div>
+  </ng-template>
+</p-table>
+
+<p-dialog
+  [(visible)]="teacherDialog"
+  [style]="{ width: '450px' }"
+  header="Teacher Details"
+  [modal]="true"
+  styleClass="p-fluid"
+  [closable]="false"
+>
+  <ng-template pTemplate="content">
+    <div class="field">
+      <label for="name">Name</label>
+      <input
+        type="text"
+        pInputText
+        id="name"
+        [(ngModel)]="teacher.name"
+        required
+        autofocus
+      />
+      <small class="p-error" *ngIf="submitted && !teacher.name"
+        >Name is required.</small
+      >
+    </div>
+    <div class="field">
+      <label for="name">Address</label>
+      <input
+        type="text"
+        pInputText
+        id="address"
+        [(ngModel)]="teacher.address"
+        required
+        autofocus
+      />
+      <small class="p-error" *ngIf="submitted && !teacher.address"
+        >Address is required.</small
+      >
+    </div>
+    <div class="field">
+      <label for="name">Major Subject</label>
+      <input
+        type="text"
+        pInputText
+        id="majorSubject"
+        [(ngModel)]="teacher.majorSubject"
+        required
+        autofocus
+      />
+      <small class="p-error" *ngIf="submitted && !teacher.majorSubject"
+        >Value is required.</small
+      >
+    </div>
+    <div class="field">
+      <label for="contactNumber">Contact Number</label>
+      <input
+        type="text"
+        pInputText
+        id="name"
+        [(ngModel)]="teacher.contactNumber"
+        required
+        autofocus
+      />
+      <small class="p-error" *ngIf="submitted && !teacher.contactNumber"
+        >Value is required.</small
+      >
+    </div>
+    <div class="field">
+      <label for="age">Age</label>
+
+      <p-inputNumber
+        [(ngModel)]="teacher.age"
+        [showButtons]="true"
+        [min]="20"
+        [max]="60"
+      ></p-inputNumber>
+      <small class="p-error" *ngIf="submitted && !teacher.age"
+        >Value is required.</small
+      >
+    </div>
+    <div class="field">
+      <p style="display: flex">
+        <p-inputSwitch [(ngModel)]="teacher.available"></p-inputSwitch>
+        <span style="margin-left: 10px">Available</span>
+      </p>
+      <small class="p-error" *ngIf="submitted && !teacher.available"
+        >Value is required.</small
+      >
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button
+      pButton
+      pRipple
+      label="Cancel"
+      icon="pi pi-times"
+      class="p-button-text"
+      (click)="hideDialog()"
+    ></button>
+    <button
+      pButton
+      pRipple
+      label="Save"
+      icon="pi pi-check"
+      class="p-button-text"
+      (click)="saveTeacher()"
+    ></button>
+  </ng-template>
+</p-dialog>
+
+<p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>

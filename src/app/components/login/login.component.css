@@ -1,0 +1,27 @@
+.centerLoginCard {
+  text-align: -webkit-center !important;
+}
+
+.headerTextStyle {
+  font-size: 20px;
+  padding-left: 10px;
+}
+/* :host ::ng-deep .p-password input {
+    width: 20rem;
+  } */
+:host ::ng-deep .p-input-icon-left > .p-inputtext {
+  padding-left: 2rem;
+  width: 95%;
+}
+:host ::ng-deep .p-input-icon-left > i:first-of-type {
+  left: 1.5rem;
+  color: #6c757d;
+}
+.loginScreenColor {
+  background-color: #e6e1de;
+  height: 100vh;
+}
+.buttonAndError {
+  text-align: center;
+  margin-top: 20px;
+}

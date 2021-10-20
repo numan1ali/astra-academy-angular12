@@ -1,0 +1,99 @@
+<div class="grid loginScreenColor">
+  <div
+    class="
+      col-6 col-offset-3
+      sm:col-6
+      md:col-offset-3 md:col-6
+      sm:col-offset-3
+      centerLoginCard
+    "
+  >
+    <p-card
+      header="Astra Academy"
+      [style]="{
+        width: '450px',
+        textAlign: 'center',
+        marginTop: '15%',
+        backgroundColor: 'white',
+        padding: '10px',
+        borderRadius: '5%',
+        minHeight: '290px'
+      }"
+      styleClass="p-card-shadow"
+    >
+      <form [formGroup]="loginForm">
+        <span class="col-12 md-10 p-input-icon-left">
+          <i class="pi pi-user"></i>
+          <input
+            type="email"
+            pInputText
+            placeholder="Email"
+            formControlName="email"
+          />
+        </span>
+
+        <small
+          *ngIf="
+            (emailControl.dirty || emailControl.touched) &&
+            emailControl.errors?.required
+          "
+          class="p-error"
+          >Value is required.
+        </small>
+        <small
+          *ngIf="
+            (emailControl.dirty || emailControl.touched) &&
+            emailControl.errors?.email
+          "
+          class="p-error"
+          >Email is not valid.
+        </small>
+        <span class="col-12 md-10 p-input-icon-left">
+          <i class="pi pi-lock"></i>
+          <input
+            type="password"
+            pInputText
+            placeholder="Password"
+            formControlName="password"
+          />
+        </span>
+        <small
+          *ngIf="
+            (passwordControl.dirty || passwordControl.touched) &&
+            passwordControl.errors?.required
+          "
+          class="p-error"
+          >Value is required.
+        </small>
+      </form>
+      <small *ngIf="invalidUser" class="p-error"
+        >Invalid email or password.
+      </small>
+      <div class="buttonAndError">
+        <button
+          pButton
+          pRipple
+          type="button"
+          label="Login"
+          (click)="authenticateUser()"
+          [style]="{
+            lineHeight: '20px',
+            width: '70%',
+            backgroundColor: '#074f97'
+          }"
+          [disabled]="loginForm.invalid"
+          class="p-button-raised"
+        ></button>
+      </div>
+    </p-card>
+    <div class="buttonAndError">
+      <span style="color: #40a9ff">
+        <a
+          href="https://www.eng.it/en/who-we-are/engineering-group/"
+          target="_blank"
+          >Copyrights © Astra Academy</a
+        >
+      </span>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,244 @@
+<p-toast></p-toast>
+
+<p-table
+  #dt
+  [value]="students"
+  [rows]="user.role === 'admin' ? 5 : 6"
+  [paginator]="true"
+  [globalFilterFields]="[
+    'name',
+    'country.name',
+    'representative.name',
+    'status'
+  ]"
+  responsiveLayout="scroll"
+  [responsive]="true"
+  [(selection)]="selectedStudents"
+  [rowHover]="true"
+  [loading]="loading"
+  [filterDelay]="0"
+  dataKey="id"
+  [scrollHeight]="'calc(100vh - 280px)'"
+  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+  [showCurrentPageReport]="true"
+>
+  <ng-template pTemplate="caption">
+    <div class="flex align-items-center justify-content-between">
+      <h5 class="m-0" *ngIf="user.role === 'admin'">Manage Students</h5>
+      <h5 class="m-0" *ngIf="user.role === 'teacher'">Assigned Students</h5>
+      <h5 class="m-0" *ngIf="user.role === 'student'">Total Students</h5>
+      <!-- <p-selectButton
+        [options]="selectButtonOptions"
+        [(ngModel)]="selectedButton"
+        optionLabel="label"
+        optionValue="value"
+        [style]="{
+          marginRight: '10px'
+        }"
+      ></p-selectButton> -->
+      <!-- <span *ngIf="selectedButton === 'student'" style="margin-right: 10px">
+          <button
+            pButton
+            pRipple
+            label="Student"
+            icon="pi pi-plus"
+            class="p-button-rounded p-button-outlined"
+          ></button
+        ></span> -->
+      <span class="p-input-icon-left">
+        <i class="pi pi-search"></i>
+        <input
+          pInputText
+          type="text"
+          (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+          placeholder="Search by Name"
+        />
+      </span>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="header">
+    <tr>
+      <th style="width: 3rem"></th>
+      <th pSortableColumn="name">
+        Name <p-sortIcon field="name"></p-sortIcon>
+      </th>
+      <ng-container *ngIf="user.role !== 'student'">
+        <th pSortableColumn="rollNumber">
+          Roll Number <p-sortIcon field="rollNumber"></p-sortIcon>
+        </th>
+        <th pSortableColumn="semester">
+          Semester <p-sortIcon field="semester"></p-sortIcon>
+        </th>
+        <th pSortableColumn="batch">
+          Batch <p-sortIcon field="batch"></p-sortIcon>
+        </th>
+        <th pSortableColumn="gpa">GPA <p-sortIcon field="gpa"></p-sortIcon></th>
+        <th pSortableColumn="assignedTeacher">
+          Assigned Teacher <p-sortIcon field="assignedTeacher"></p-sortIcon>
+        </th>
+      </ng-container>
+      <th></th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-student>
+    <tr>
+      <td>
+        <!-- <p-tableCheckbox [value]="student"></p-tableCheckbox> -->
+      </td>
+      <td>{{ student.name }}</td>
+
+      <ng-container *ngIf="user.role !== 'student'">
+        <td>{{ student.rollNumber }}</td>
+        <td>{{ student.semester }}</td>
+        <td>{{ student.batch }}</td>
+        <td>{{ student.gpa }}</td>
+        <td>{{ student.assignedTeacher }}</td>
+        <td>
+          <span *ngIf="user.role === 'admin'">
+            <button
+              pButton
+              pRipple
+              icon="pi pi-pencil"
+              class="p-button-rounded p-button-success p-mr-2"
+              [style]="{
+                marginRight: '10px'
+              }"
+              (click)="editStudent(student)"
+            ></button>
+            <button
+              pButton
+              pRipple
+              icon="pi pi-trash"
+              class="p-button-rounded p-button-warning"
+              (click)="deleteStudent(student)"
+            ></button>
+          </span>
+        </td>
+      </ng-container>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="summary">
+    <div class="p-d-flex p-ai-center p-jc-between">
+      In total there are {{ students ? students.length : 0 }} students.
+    </div>
+  </ng-template>
+</p-table>
+
+<p-dialog
+  [(visible)]="studentDialog"
+  [style]="{ width: '550px' }"
+  header="Student Details"
+  [modal]="true"
+  styleClass="p-fluid"
+  [closable]="false"
+>
+  <ng-template pTemplate="content">
+    <div class="field">
+      <label for="name">Name</label>
+      <input
+        type="text"
+        pInputText
+        id="name"
+        [(ngModel)]="student.name"
+        required
+        autofocus
+      />
+      <small class="p-error" *ngIf="submitted && !student.name"
+        >Name is required.</small
+      >
+    </div>
+    <div class="field">
+      <label for="name">Roll Number</label>
+      <input
+        type="text"
+        pInputText
+        id="name"
+        [(ngModel)]="student.rollNumber"
+        required
+        autofocus
+      />
+      <small class="p-error" *ngIf="submitted && !student.rollNumber"
+        >Roll number is required.</small
+      >
+    </div>
+    <div class="field">
+      <label for="name">Semester</label>
+      <input
+        type="text"
+        pInputText
+        id="name"
+        [(ngModel)]="student.semester"
+        required
+        autofocus
+      />
+      <small class="p-error" *ngIf="submitted && !student.semester"
+        >Value is required.</small
+      >
+    </div>
+    <div class="field">
+      <label for="name">Batch</label>
+      <input
+        type="text"
+        pInputText
+        id="name"
+        [(ngModel)]="student.batch"
+        required
+        autofocus
+      />
+      <small class="p-error" *ngIf="submitted && !student.batch"
+        >Value is required.</small
+      >
+    </div>
+    <div class="field">
+      <label for="gpa">GPA</label>
+
+      <p-inputNumber
+        [(ngModel)]="student.gpa"
+        [showButtons]="true"
+        [min]="0"
+        [max]="4"
+        [step]="0.1"
+        mode="decimal"
+        [maxFractionDigits]="2"
+      ></p-inputNumber>
+      <small class="p-error" *ngIf="submitted && !student.gpa"
+        >Value is required.</small
+      >
+    </div>
+    <div class="field">
+      <label for="assignedTeacher">Assigned Teacher</label>
+      <input
+        type="text"
+        pInputText
+        id="assignedTeacher"
+        [(ngModel)]="student.assignedTeacher"
+        required
+        autofocus
+      />
+      <small class="p-error" *ngIf="submitted && !student.assignedTeacher"
+        >Value is required.</small
+      >
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button
+      pButton
+      pRipple
+      label="Cancel"
+      icon="pi pi-times"
+      class="p-button-text"
+      (click)="hideDialog()"
+    ></button>
+    <button
+      pButton
+      pRipple
+      label="Save"
+      icon="pi pi-check"
+      class="p-button-text"
+      (click)="saveStudent()"
+    ></button>
+  </ng-template>
+</p-dialog>
+
+<p-confirmDialog [style]="{ width: '450px' }"></p-confirmDialog>

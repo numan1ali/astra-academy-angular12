@@ -1,0 +1,220 @@
+<p-toast></p-toast>
+<p-dialog
+  [(visible)]="teacherDialog"
+  [style]="{ width: '550px' }"
+  [modal]="true"
+  styleClass="p-fluid"
+  [closable]="false"
+>
+  <ng-template pTemplate="content">
+    <ng-container *ngIf="!personalFormState">
+      <h3 style="text-align: center">Teacher Credential</h3>
+      <form [formGroup]="credentialForm">
+        <div class="fluid">
+          <div class="field">
+            <label for="firstname">Email</label>
+            <input
+              type="email"
+              pInputText
+              placeholder="Email"
+              formControlName="email"
+            />
+            <small
+              *ngIf="
+                (credentialForm.controls.email.dirty ||
+                  credentialForm.controls.email.touched) &&
+                credentialForm.controls.email.errors?.required
+              "
+              class="p-error"
+              >Email is required.
+            </small>
+            <small
+              *ngIf="
+                (credentialForm.controls.email.dirty ||
+                  credentialForm.controls.email.touched) &&
+                credentialForm.controls.email.errors?.email
+              "
+              class="p-error"
+              >Email is not valid.
+            </small>
+          </div>
+          <div class="field">
+            <label for="firstname">Password</label>
+            <input
+              type="password"
+              pInputText
+              placeholder="Password"
+              formControlName="password"
+            />
+            <small
+              *ngIf="
+                (credentialForm.controls.password.dirty ||
+                  credentialForm.controls.password.touched) &&
+                credentialForm.controls.password.errors?.required
+              "
+              class="p-error"
+              >Value is required.
+            </small>
+          </div>
+        </div>
+      </form>
+    </ng-container>
+    <ng-container *ngIf="personalFormState">
+      <h3 style="text-align: center">Personal Detial</h3>
+      <form [formGroup]="personalDetailForm">
+        <div class="fluid">
+          <div class="field">
+            <label for="name">Name</label>
+            <input
+              type="text"
+              pInputText
+              formControlName="name"
+              required
+              autofocus
+            />
+            <small
+              class="p-error"
+              *ngIf="
+                (personalDetailForm.controls.name.dirty ||
+                  personalDetailForm.controls.name.touched) &&
+                personalDetailForm.controls.name.errors?.required
+              "
+              >Value is required.</small
+            >
+          </div>
+          <div class="field">
+            <label for="contactNumber">Contact Number</label>
+            <input
+              type="text"
+              pInputText
+              formControlName="contactNumber"
+              required
+              autofocus
+            />
+            <small
+              class="p-error"
+              *ngIf="
+                (personalDetailForm.controls.contactNumber.dirty ||
+                  personalDetailForm.controls.contactNumber.touched) &&
+                personalDetailForm.controls.contactNumber.errors?.required
+              "
+              >Value is required.</small
+            >
+          </div>
+          <div class="field">
+            <label for="majorSubject">Major Subject</label>
+            <input
+              type="text"
+              pInputText
+              formControlName="majorSubject"
+              required
+              autofocus
+            />
+            <small
+              class="p-error"
+              *ngIf="
+                (personalDetailForm.controls.majorSubject.dirty ||
+                  personalDetailForm.controls.majorSubject.touched) &&
+                personalDetailForm.controls.majorSubject.errors?.required
+              "
+              >Value is required.</small
+            >
+          </div>
+          <div class="field">
+            <label for="address">Address</label>
+            <input
+              type="text"
+              pInputText
+              formControlName="address"
+              required
+              autofocus
+            />
+            <small
+              class="p-error"
+              *ngIf="
+                (personalDetailForm.controls.address.dirty ||
+                  personalDetailForm.controls.address.touched) &&
+                personalDetailForm.controls.address.errors?.required
+              "
+              >Value is required.</small
+            >
+          </div>
+
+          <div class="field">
+            <label for="age">Age</label>
+            <p-inputNumber
+              formControlName="age"
+              [showButtons]="true"
+              [min]="20"
+              [max]="60"
+            ></p-inputNumber>
+            <small *ngIf="personalDetailForm.controls.age.errors?.min">
+              Value can't be less than 20.
+            </small>
+            <small *ngIf="personalDetailForm.controls.age.errors?.max">
+              Value can't be greater than 60.
+            </small>
+            <small
+              *ngIf="
+                (personalDetailForm.controls.age.dirty ||
+                  personalDetailForm.controls.age.touched) &&
+                personalDetailForm.controls.age.errors?.required
+              "
+              class="p-error"
+              >Value is required.
+            </small>
+          </div>
+          <div class="field">
+            <p style="display: flex">
+              <label for="available">Available</label>
+
+              <span style="margin-left: 10px">
+                <p-inputSwitch formControlName="available"></p-inputSwitch
+              ></span>
+            </p>
+            <small
+              class="p-error"
+              *ngIf="
+                (personalDetailForm.controls.available.dirty ||
+                  personalDetailForm.controls.available.touched) &&
+                personalDetailForm.controls.available.errors?.required
+              "
+              >Value is required.</small
+            >
+          </div>
+        </div>
+      </form>
+    </ng-container>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <button
+      *ngIf="!personalFormState"
+      pButton
+      pRipple
+      label="Cancel"
+      icon="pi pi-times"
+      class="p-button-text"
+      (click)="hideDialog()"
+    ></button>
+    <button
+      *ngIf="!personalFormState"
+      pButton
+      pRipple
+      label="Next"
+      icon="pi pi-check"
+      class="p-button-text"
+      (click)="nextPage()"
+      [disabled]="credentialForm.invalid"
+    ></button>
+    <button
+      *ngIf="personalFormState"
+      pButton
+      pRipple
+      label="Create"
+      icon="pi pi-check"
+      class="p-button-text"
+      (click)="saveTeacher()"
+      [disabled]="personalDetailForm.invalid"
+    ></button>
+  </ng-template>
+</p-dialog>
