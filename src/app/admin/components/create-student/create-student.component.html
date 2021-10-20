@@ -151,12 +151,6 @@
               mode="decimal"
               [maxFractionDigits]="2"
             ></p-inputNumber>
-            <small *ngIf="personalDetailForm.controls.age.errors?.min">
-              Value can't be less than 0.
-            </small>
-            <small *ngIf="personalDetailForm.controls.age.errors?.max">
-              Value can't be greater than 4.
-            </small>
             <small
               *ngIf="
                 (personalDetailForm.controls.gpa.dirty ||
@@ -193,6 +187,7 @@
   </ng-template>
   <ng-template pTemplate="footer">
     <button
+      *ngIf="!personalFormState"
       pButton
       pRipple
       label="Cancel"

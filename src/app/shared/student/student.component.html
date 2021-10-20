@@ -27,24 +27,7 @@
       <h5 class="m-0" *ngIf="user.role === 'admin'">Manage Students</h5>
       <h5 class="m-0" *ngIf="user.role === 'teacher'">Assigned Students</h5>
       <h5 class="m-0" *ngIf="user.role === 'student'">Total Students</h5>
-      <!-- <p-selectButton
-        [options]="selectButtonOptions"
-        [(ngModel)]="selectedButton"
-        optionLabel="label"
-        optionValue="value"
-        [style]="{
-          marginRight: '10px'
-        }"
-      ></p-selectButton> -->
-      <!-- <span *ngIf="selectedButton === 'student'" style="margin-right: 10px">
-          <button
-            pButton
-            pRipple
-            label="Student"
-            icon="pi pi-plus"
-            class="p-button-rounded p-button-outlined"
-          ></button
-        ></span> -->
+
       <span class="p-input-icon-left">
         <i class="pi pi-search"></i>
         <input

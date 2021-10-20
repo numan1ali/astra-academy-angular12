@@ -39,7 +39,7 @@ export class CreateStudentComponent implements OnInit {
       rollNumber: ['', [Validators.required]],
       semester: ['', [Validators.required]],
       batch: ['', [Validators.required]],
-      gpa: ['', [Validators.required, Validators.min(0), Validators.max(4)]],
+      gpa: ['', [Validators.required]],
       assignedTeacher: ['', [Validators.required]],
     });
   }
