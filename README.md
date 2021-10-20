@@ -2,6 +2,13 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.2.
 
+## Installation
+
+To run this project first clone the repository and then go into the folder and on terminal run the command `npm install`. To run the project simply run the command `ng serve`.
+
+To see the live demo go to the link `https://astra-academy61nta.web.app/`
+credentials email: admin@gmail.com password:P@sswrd1
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
