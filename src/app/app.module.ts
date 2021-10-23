@@ -9,16 +9,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
-import { MenubarModule } from 'primeng/menubar';
-import { InputTextModule } from 'primeng/inputtext';
-import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
-import { PasswordModule } from 'primeng/password';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpErrorInterceptor } from './http-error.interceptor';
 import { MessageService } from 'primeng/api';
-import { ToastModule } from 'primeng/toast';
+import { SharedModule } from './shared/shared.module';
+
 @NgModule({
   declarations: [AppComponent, LoginComponent, PageNotFoundComponent],
   imports: [
@@ -27,14 +23,8 @@ import { ToastModule } from 'primeng/toast';
     HttpClientModule,
     FormsModule,
     RouterModule,
-    ToastModule,
     ReactiveFormsModule,
-    MenubarModule,
-    InputTextModule,
-    ButtonModule,
-    CardModule,
-    PasswordModule,
-
+    SharedModule,
     BrowserAnimationsModule,
   ],
   providers: [

@@ -18,6 +18,7 @@ export class CreateTeacherComponent implements OnInit {
   createMode: boolean = false;
   personalFormState: boolean = false;
   createdUser!: User;
+  loading: boolean = false;
   @Input('teacherDialog') teacherDialog = false;
   @Output('teacherDialogChange') teacherDialogChange = new EventEmitter();
   constructor(
@@ -43,6 +44,7 @@ export class CreateTeacherComponent implements OnInit {
 
   ngOnInit(): void {}
   nextPage() {
+    this.loading = true;
     let body = {
       ...this.credentialForm.value,
       role: 'teacher',
@@ -58,6 +60,7 @@ export class CreateTeacherComponent implements OnInit {
           life: 2000,
         });
         this.personalFormState = true;
+        this.loading = false;
       });
   }
   openNew() {
@@ -71,6 +74,7 @@ export class CreateTeacherComponent implements OnInit {
 
   saveTeacher() {
     if (this.personalFormState && this.personalDetailForm.valid) {
+      this.loading = true;
       let Body = {
         ...this.personalDetailForm.value,
         userId: this.createdUser.userId,
@@ -85,6 +89,7 @@ export class CreateTeacherComponent implements OnInit {
         this.teacherDialog = false;
         this.teacherDialogChange.emit(this.teacherDialog);
         this.personalFormState = false;
+        this.loading = false;
       });
     }
   }

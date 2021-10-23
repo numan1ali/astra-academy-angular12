@@ -35,6 +35,7 @@ export class LoginComponent implements OnInit {
   passwrod: string = 'password3';
   loginForm!: FormGroup;
   user!: User;
+  loading: boolean = false;
   ngOnInit() {
     this.items = [];
     // this.getAllUsersData();
@@ -56,6 +57,7 @@ export class LoginComponent implements OnInit {
     this.authService.getAllUsersData().subscribe((data: User[]) => {});
   }
   authenticateUser() {
+    this.loading = true;
     this.authService
       .authenticatUser(this.emailControl.value, this.passwordControl.value)
       .subscribe((value) => {
@@ -69,6 +71,7 @@ export class LoginComponent implements OnInit {
         } else {
           this.invalidUser = true;
         }
+        this.loading = false;
       });
   }
 }

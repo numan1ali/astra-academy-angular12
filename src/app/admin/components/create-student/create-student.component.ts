@@ -14,7 +14,7 @@ import { User } from '../../user-model';
 export class CreateStudentComponent implements OnInit {
   // studentDialog: boolean | undefined;
   editMode: boolean = false;
-  loading: boolean = true;
+  loading: boolean = false;
   credentialForm!: FormGroup;
   personalDetailForm!: FormGroup;
   createMode: boolean = false;
@@ -46,6 +46,7 @@ export class CreateStudentComponent implements OnInit {
 
   ngOnInit(): void {}
   nextPage() {
+    this.loading = true;
     let body = {
       ...this.credentialForm.value,
       role: 'student',
@@ -61,6 +62,7 @@ export class CreateStudentComponent implements OnInit {
           life: 2000,
         });
         this.personalFormState = true;
+        this.loading = false;
       });
   }
   openNew() {
@@ -74,6 +76,7 @@ export class CreateStudentComponent implements OnInit {
 
   saveStudent() {
     if (this.personalFormState && this.personalDetailForm.valid) {
+      this.loading = true;
       let studentBody = {
         ...this.personalDetailForm.value,
         userId: this.createdUser.userId,
@@ -91,6 +94,7 @@ export class CreateStudentComponent implements OnInit {
           this.studentDialogChange.emit(this.studentDialog);
           this.editMode = false;
           this.personalFormState = false;
+          this.loading = false;
         });
     }
   }

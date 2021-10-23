@@ -13,17 +13,16 @@ import { RippleModule } from 'primeng/ripple';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { InputSwitchModule } from 'primeng/inputswitch';
-import { StepsModule } from 'primeng/steps';
 import { CardModule } from 'primeng/card';
+import { PasswordModule } from 'primeng/password';
+import { LoadingComponent } from './components/loading/loading.component';
 
 @NgModule({
-  declarations: [StudentComponent],
+  declarations: [StudentComponent, LoadingComponent],
   imports: [
     CommonModule,
     ToolbarModule,
     TableModule,
-    DialogModule,
-    InputTextModule,
     ButtonModule,
     FormsModule,
     ReactiveFormsModule,
@@ -35,8 +34,11 @@ import { CardModule } from 'primeng/card';
     InputSwitchModule,
     FormsModule,
     ReactiveFormsModule,
-    StepsModule,
     CardModule,
+    DialogModule,
+    InputTextModule,
+    CardModule,
+    PasswordModule,
   ],
   exports: [
     StudentComponent,
@@ -53,8 +55,9 @@ import { CardModule } from 'primeng/card';
     InputNumberModule,
     SelectButtonModule,
     InputSwitchModule,
-    StepsModule,
     CardModule,
+    PasswordModule,
+    LoadingComponent,
   ],
 })
 export class SharedModule {}
